@@ -16,7 +16,7 @@ export FABRIC_CFG_PATH=$PWD
 
 ## Generates Org certs
 function generateCerts (){
-	CRYPTOGEN=$TOOLS/cryptogen
+	CRYPTOGEN=cryptogen
     if $EXTEND; then
         $CRYPTOGEN extend --input=crypto-config --config=./cluster-config.yaml
     else
@@ -35,7 +35,7 @@ function generateChannelArtifacts() {
 	fi
 
 
-	CONFIGTXGEN=$TOOLS/configtxgen
+	CONFIGTXGEN=configtxgen
  	$CONFIGTXGEN -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
 # 	$CONFIGTXGEN -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID $CHANNEL_NAME
 #	$CONFIGTXGEN -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org1MSPanchors.tx -channelID $CHANNEL_NAME -asOrg Org1MSP

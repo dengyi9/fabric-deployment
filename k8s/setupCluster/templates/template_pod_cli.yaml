@@ -8,7 +8,7 @@ spec:
     accessModes:
        - ReadWriteMany
     nfs: 
-      path: /channel-artifacts
+      path: /home/xiaohao/test/channel-artifacts
       server: $nfs
 ---
 
@@ -35,7 +35,7 @@ spec:
     accessModes:
        - ReadWriteMany
     nfs:
-      path: /crypto-config/ordererOrganizations/$orderer0/msp/tlscacerts
+      path: /home/xiaohao/test/crypto-config/ordererOrganizations/$orderer0/msp/tlscacerts
       server: $nfs #change to your nfs server ip here
 ---
 
@@ -93,7 +93,7 @@ spec:
               topologyKey: "kubernetes.io/hostname"
       containers:
         - name: $name
-          image:  hyperledger/fabric-tools:x86_64-1.1.0-preview
+          image:  hyperledger/fabric-tools:x86_64-1.1.0
           env:
           
           - name: CORE_PEER_TLS_ENABLED

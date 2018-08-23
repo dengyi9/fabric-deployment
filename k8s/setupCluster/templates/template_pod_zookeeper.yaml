@@ -4,14 +4,17 @@ metadata:
   name: $logVolume
 spec:
   capacity:
-    storage: 20Gi
+    storage: 200Mi
   accessModes:
     - ReadWriteMany
-  flexVolume:
-    driver: "alicloud/disk"
-    fsType: "ext4"
-    options:
-      volumeId: "$logVolume"
+  nfs:
+    path: /home/xiaohao/test/$logVolume/$zkPodName
+    server: $nfs
+#  flexVolume:
+#    driver: "alicloud/disk"
+#    fsType: "ext4"
+#    options:
+#      volumeId: "$logVolume"
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -19,14 +22,17 @@ metadata:
   name: $dataVolume
 spec:
   capacity:
-    storage: 20Gi
+    storage: 200Mi
   accessModes:
     - ReadWriteMany
-  flexVolume:
-    driver: "alicloud/disk"
-    fsType: "ext4"
-    options:
-      volumeId: "$dataVolume"
+  nfs:
+    path: /home/xiaohao/test/$dataVolume/$zkPodName
+    server: $nfs
+#  flexVolume:
+#    driver: "alicloud/disk"
+#    fsType: "ext4"
+#    options:
+#      volumeId: "$dataVolume"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -38,7 +44,7 @@ spec:
    - ReadWriteMany
  resources:
    requests:
-     storage: 20Gi
+     storage: 200Mi
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -50,7 +56,7 @@ spec:
    - ReadWriteMany
  resources:
    requests:
-     storage: 20Gi
+     storage: 200Mi
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -82,7 +88,7 @@ spec:
       terminationGracePeriodSeconds: 120
       containers:
         - name: $zkPodName
-          image: hyperledger/fabric-zookeeper:x86_64-1.1.0-preview
+          image: hyperledger/fabric-zookeeper:x86_64-1.1.0
           env:
             - name: ZOO_MY_ID
               value: "$seq"

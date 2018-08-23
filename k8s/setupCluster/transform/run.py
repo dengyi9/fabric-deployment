@@ -29,7 +29,7 @@ def runOrderers(path):
             ordererPath = os.path.join(orgPath + "/orderers", orderer)
             ordererYaml = os.path.join(ordererPath, orderer + ".yaml")
             checkAndRun(ordererYaml)
-            # sleep(5)
+            sleep(5)
 
 
 def runPeers(path):
@@ -59,12 +59,12 @@ def runKafkas(path):
     for i in range(0, 3):
         zkYaml = os.path.join(path, "zookeeper" + str(i) + "-zookeeper.yaml")
         checkAndRun(zkYaml)
-        # sleep(3)
+        sleep(3)
 
     for i in range(0, 4):
         kafkaYaml = os.path.join(path, "kafka" + str(i) + "-kafka.yaml")
         checkAndRun(kafkaYaml)
-        # sleep(5)
+        sleep(5)
 
 
 def checkAndRun(f):
@@ -77,6 +77,6 @@ def checkAndRun(f):
 
 if __name__ == "__main__":
     runKafkas(KAFKA)
-    # sleep(60)
+    sleep(60)
     runOrderers(ORDERER)
     runPeers(PEER)

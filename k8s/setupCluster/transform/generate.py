@@ -11,10 +11,10 @@ KAFKA = os.path.join(BASEDIR, "../crypto-config/kafka")
 
 # generateNamespacePod generate the yaml file to create the namespace for k8s, and return a set of paths which indicate the location of org files
 
-def generateKafka(DIR, override, all_volumes):
+def generateKafka(DIR, override, all_volumes, nfs):
     tc.configKafkaNamespace(DIR, override)
-    tc.configZookeepers(DIR, override, all_volumes)
-    tc.configKafkas(DIR, override, all_volumes)
+    tc.configZookeepers(DIR, override, all_volumes, nfs)
+    tc.configKafkas(DIR, override, all_volumes, nfs)
 
 
 def generateNamespacePod(DIR, override, all_volumes, nfs, ex_ports):
@@ -31,7 +31,7 @@ def generateNamespacePod(DIR, override, all_volumes, nfs, ex_ports):
     return orgs
 
 
-def generateDeploymentPod(orgs, override, all_volumes, ex_ports):
+def generateDeploymentPod(orgs, override, all_volumes, ex_ports, nfs):
     for orgindex, org in enumerate(orgs):
 
         if org.find("peer") != -1:  # whether it create orderer pod or peer pod
@@ -45,7 +45,7 @@ def generateDeploymentPod(orgs, override, all_volumes, ex_ports):
             memberDIR = os.path.join(org + suffix, member)
             # print(memberDIR)
             # print(os.listdir(memberDIR))
-            tc.generateYaml(member, memberDIR, suffix, override, orgindex, nodeindex, all_volumes, ex_ports)
+            tc.generateYaml(member, memberDIR, suffix, override, orgindex, nodeindex, all_volumes, ex_ports, nfs)
 
 
 def allInOne():
@@ -85,11 +85,11 @@ def allInOne():
             exit(2)
 
     peerOrgs = generateNamespacePod(PEER, args.override, all_volumes, args.nfs, ex_ports)
-    generateDeploymentPod(peerOrgs, args.override, all_volumes, ex_ports)
+    generateDeploymentPod(peerOrgs, args.override, all_volumes, ex_ports, args.nfs)
 
-    generateKafka(KAFKA, args.override, all_volumes)
+    generateKafka(KAFKA, args.override, all_volumes, args.nfs)
     ordererOrgs = generateNamespacePod(ORDERER, args.override, all_volumes, args.nfs, ex_ports)
-    generateDeploymentPod(ordererOrgs, args.override, all_volumes, ex_ports)
+    generateDeploymentPod(ordererOrgs, args.override, all_volumes, ex_ports, args.nfs)
 
 
 if __name__ == "__main__":

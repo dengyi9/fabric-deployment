@@ -37,7 +37,7 @@ def configKafkaNamespace(path, override):
     condRender(namespaceTemplate, path + "/" + "kafka-namespace.yaml", override)
 
 
-def configZookeepers(path, override, all_volumes):
+def configZookeepers(path, override, all_volumes, nfs):
     for i in range(0, 3):
         zkTemplate = getTemplate("template_pod_zookeeper.yaml")
         zkPodName = "zookeeper" + str(i) + "-kafka"
@@ -58,10 +58,11 @@ def configZookeepers(path, override, all_volumes):
         condRender(zkTemplate, path + "/" + zookeeperID + "-zookeeper.yaml", override,
                    zkPodName=zkPodName, zookeeperID=zookeeperID, seq=seq, zooServers=zooServers,
                    nodePort1=nodePort1, nodePort2=nodePort2, nodePort3=nodePort3,
-                   logVolume=zk_log_volume, dataVolume=zk_data_volume)
+                   logVolume=zk_log_volume, dataVolume=zk_data_volume,
+                   nfs=nfs)
 
 
-def configKafkas(path, override, all_volumes):
+def configKafkas(path, override, all_volumes, nfs):
     for i in range(0, 4):
         kafkaTemplate = getTemplate("template_pod_kafka.yaml")
         kafkaPodName = "kafka" + str(i) + "-kafka"
@@ -77,7 +78,8 @@ def configKafkas(path, override, all_volumes):
         condRender(kafkaTemplate, path + "/" + kafkaID + "-kafka.yaml", override,
                    kafkaPodName=kafkaPodName, kafkaID=kafkaID, seq=seq,
                    advertisedHostname=advertisedHostname, nodePort1=nodePort1,
-                   nodePort2=nodePort2, volumeId=kafka_volume)
+                   nodePort2=nodePort2, volumeId=kafka_volume,
+                   nfs=nfs)
 
 
 # create org/namespace
@@ -152,22 +154,23 @@ def configORGS(name, path, orderer0,
                    tlsCert=tlsCertTemplate.format("ca." + name),
                    nodePort=exposedPort,
                    pvName=name + "-pv",
-                   volumeId=ca_volume
+                   volumeId=ca_volume,
+                   nfs=nfs
                    )
         #######
 
 
-def generateYaml(member, memberPath, flag, override, orgindex, nodeindex, all_volumes, ex_ports):
+def generateYaml(member, memberPath, flag, override, orgindex, nodeindex, all_volumes, ex_ports, nfs):
     if flag == "/peers":
-        configPEERS(member, memberPath, override, orgindex, nodeindex, all_volumes, ex_ports)
+        configPEERS(member, memberPath, override, orgindex, nodeindex, all_volumes, ex_ports, nfs)
     else:
-        configORDERERS(member, memberPath, override, orgindex, nodeindex, all_volumes, ex_ports)
+        configORDERERS(member, memberPath, override, orgindex, nodeindex, all_volumes, ex_ports, nfs)
 
 
         # create peer/pod
 
 
-def configPEERS(name, path, override, orgindex, peerindex, all_volumes, ex_ports):  # name means peerid.
+def configPEERS(name, path, override, orgindex, peerindex, all_volumes, ex_ports, nfs):  # name means peerid.
     configTemplate = getTemplate("template_pod_peer.yaml")
 
     mspPathTemplate = 'peers/{}/msp'
@@ -216,12 +219,13 @@ def configPEERS(name, path, override, orgindex, peerindex, all_volumes, ex_ports
                nodePort2=exposedPort2,
                nodePort3=exposedPort3,
                pvName=orgName + "-pv",
-               volumeId=peer_volume
+               volumeId=peer_volume,
+               nfs=nfs,
                )
 
 
 # create orderer/pod
-def configORDERERS(name, path, override, orgindex, ordererindex, all_volumes, ex_ports):  # name means ordererid
+def configORDERERS(name, path, override, orgindex, ordererindex, all_volumes, ex_ports, nfs):  # name means ordererid
     configTemplate = getTemplate("template_pod_orderer.yaml")
 
     mspPathTemplate = 'orderers/{}/msp'
@@ -252,6 +256,7 @@ def configORDERERS(name, path, override, orgindex, ordererindex, all_volumes, ex
                tlsPath=tlsPathTemplate.format(name),
                nodePort=exposedPort,
                pvName=orgName + "-pv",
-               volumeId=orderer_volume
+               volumeId=orderer_volume,
+               nfs=nfs
                )
 
