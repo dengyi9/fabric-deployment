@@ -46,7 +46,7 @@ spec:
        ns: kafka
     spec:
       affinity:
-       podAntiAffinity:
+#       podAntiAffinity:
 #         preferredDuringSchedulingIgnoredDuringExecution:
 #         - weight: 100
 #           podAffinityTerm:
@@ -57,14 +57,14 @@ spec:
 #                  values:
 #                  - kafka
 #              topologyKey: "kubernetes.io/hostname"
-         requiredDuringSchedulingIgnoredDuringExecution:
-         - labelSelector:
-             matchExpressions:
-             - key: "role"
-               operator: In
-               values:
-               - kafka
-           topologyKey: "kubernetes.io/hostname"
+#         requiredDuringSchedulingIgnoredDuringExecution:
+#         - labelSelector:
+#             matchExpressions:
+#             - key: "role"
+#               operator: In
+#               values:
+#               - kafka
+#           topologyKey: "kubernetes.io/hostname"
        podAffinity:
          preferredDuringSchedulingIgnoredDuringExecution:
          - weight: 100

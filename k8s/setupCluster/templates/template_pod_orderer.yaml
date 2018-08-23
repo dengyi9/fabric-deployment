@@ -44,16 +44,16 @@ spec:
         org: $namespace
         orderer-id: $ordererID
     spec:
-      affinity:
-       podAntiAffinity:
-         requiredDuringSchedulingIgnoredDuringExecution:
-         - labelSelector:
-             matchExpressions:
-             - key: "role"
-               operator: In
-               values:
-               - orderer
-           topologyKey: "kubernetes.io/hostname"
+#      affinity:
+#       podAntiAffinity:
+#         requiredDuringSchedulingIgnoredDuringExecution:
+#         - labelSelector:
+#             matchExpressions:
+#             - key: "role"
+#               operator: In
+#               values:
+#               - orderer
+#           topologyKey: "kubernetes.io/hostname"
       containers:
       - name: $podName
         image: hyperledger/fabric-orderer:x86_64-1.1.0

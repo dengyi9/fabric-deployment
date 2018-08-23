@@ -45,15 +45,15 @@ spec:
        name: ca
     spec:
      affinity:
-       podAntiAffinity:
-         requiredDuringSchedulingIgnoredDuringExecution:
-         - labelSelector:
-             matchExpressions:
-             - key: "role"
-               operator: In
-               values:
-               - ca
-           topologyKey: "kubernetes.io/hostname"
+#       podAntiAffinity:
+#         requiredDuringSchedulingIgnoredDuringExecution:
+#         - labelSelector:
+#             matchExpressions:
+#             - key: "role"
+#               operator: In
+#               values:
+#               - ca
+#           topologyKey: "kubernetes.io/hostname"
        podAffinity:
          preferredDuringSchedulingIgnoredDuringExecution:
          - weight: 100

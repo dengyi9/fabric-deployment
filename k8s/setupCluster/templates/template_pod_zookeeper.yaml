@@ -75,16 +75,16 @@ spec:
        zookeeper-id: $zookeeperID
        ns: kafka
     spec:
-      affinity:
-       podAntiAffinity:
-         requiredDuringSchedulingIgnoredDuringExecution:
-         - labelSelector:
-             matchExpressions:
-             - key: "role"
-               operator: In
-               values:
-               - zookeeper
-           topologyKey: "kubernetes.io/hostname"
+#      affinity:
+#       podAntiAffinity:
+#         requiredDuringSchedulingIgnoredDuringExecution:
+#         - labelSelector:
+#             matchExpressions:
+#             - key: "role"
+#               operator: In
+#               values:
+#               - zookeeper
+#           topologyKey: "kubernetes.io/hostname"
       terminationGracePeriodSeconds: 120
       containers:
         - name: $zkPodName
