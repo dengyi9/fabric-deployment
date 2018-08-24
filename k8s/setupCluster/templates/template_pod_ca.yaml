@@ -3,6 +3,7 @@ kind: PersistentVolume
 metadata:
   name: $volumeId
 spec:
+  storageClassName: nfs-class
   capacity:
     storage: 200Mi
   accessModes:
@@ -22,6 +23,7 @@ metadata:
  namespace: $namespace
  name: $volumeId
 spec:
+ storageClassName: nfs-class
  accessModes:
    - ReadWriteMany
  resources:

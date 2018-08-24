@@ -3,6 +3,7 @@ kind: PersistentVolume
 metadata:
   name: $logVolume
 spec:
+  storageClassName: nfs-class
   capacity:
     storage: 200Mi
   accessModes:
@@ -21,6 +22,7 @@ kind: PersistentVolume
 metadata:
   name: $dataVolume
 spec:
+  storageClassName: nfs-class
   capacity:
     storage: 200Mi
   accessModes:
@@ -40,6 +42,7 @@ metadata:
  namespace: kafka
  name: $logVolume
 spec:
+ storageClassName: nfs-class
  accessModes:
    - ReadWriteMany
  resources:
@@ -52,6 +55,7 @@ metadata:
  namespace: kafka
  name: $dataVolume
 spec:
+ storageClassName: nfs-class
  accessModes:
    - ReadWriteMany
  resources:

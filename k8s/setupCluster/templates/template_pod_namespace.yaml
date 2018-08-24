@@ -9,6 +9,7 @@ kind: PersistentVolume
 metadata:
   name: $pvName
 spec:
+  storageClassName: nfs-class
   capacity:
     storage: 500Mi
   accessModes:
@@ -23,6 +24,7 @@ metadata:
  namespace: $org
  name: $pvName
 spec:
+ storageClassName: nfs-class
  accessModes:
    - ReadWriteMany
  resources:

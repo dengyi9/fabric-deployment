@@ -3,12 +3,13 @@ kind: PersistentVolume
 metadata:
   name: $volumeId
 spec:
+  storageClassName: nfs-class
   capacity:
     storage: 200Mi
   accessModes:
     - ReadWriteMany
   nfs:
-    path: /home/xiaohao/test/home/xiaohao/test/$volumeId
+    path: /home/xiaohao/test/$volumeId
     server: $nfs
 #  flexVolume:
 #    driver: "alicloud/disk"
@@ -22,6 +23,7 @@ metadata:
  namespace: $namespace
  name: $volumeId
 spec:
+ storageClassName: nfs-class
  accessModes:
    - ReadWriteMany
  resources:

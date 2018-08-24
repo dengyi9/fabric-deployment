@@ -3,6 +3,7 @@ kind: PersistentVolume
 metadata:
     name: $artifactsName
 spec:
+    storageClassName: nfs-class
     capacity:
        storage: 500Mi
     accessModes:
@@ -18,6 +19,7 @@ metadata:
     namespace: $namespace
     name: $artifactsName
 spec:
+   storageClassName: nfs-class
    accessModes:
      - ReadWriteMany
    resources:
@@ -30,6 +32,7 @@ kind: PersistentVolume
 metadata:
     name: $orderer0pv
 spec:
+    storageClassName: nfs-class
     capacity:
        storage: 500Mi
     accessModes:
@@ -45,6 +48,7 @@ metadata:
     namespace: $namespace
     name: $orderer0pv
 spec:
+   storageClassName: nfs-class
    accessModes:
      - ReadWriteMany
    resources:
